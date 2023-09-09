@@ -21,8 +21,8 @@ public class No14916 {
             count--;
             n -= 5 * count;
         }
-        
         count += n / 2;
+
         if (change == 1 || change == 3) {
             count = -1;
         }
