@@ -3,7 +3,7 @@ package boj;
 import java.io.*;
 import java.util.StringTokenizer;
 
-//백트래킹, 순열
+//백트래킹, 순열, dfs 관련
 public class No15649 {
     static int n;
     static int m;
