@@ -12,31 +12,36 @@ public class No73 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-        int result = 0;
-        int[] raceCake = new int[n];
+        int[] arr = new int[n];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            raceCake[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(raceCake);
+        Arrays.sort(arr);
 
-        for (int i = raceCake[0]; i < raceCake[n - 1]; i++) {
-            int length = 0;
-            for (int j = 0; j < n; j++) {
-                if (i <= raceCake[j]) {
-                    length += (raceCake[j] - i);
+        bw.write(String.valueOf(binarySearch(arr, m, 0, arr[n - 1])));
+        bw.close();
+    }
+
+    private static int binarySearch(int[] arr, int key, int start, int end) {
+        int result = 0;
+        while (start <= end) {
+            int sum = 0;
+            int mid = (start + end) / 2;
+
+            for (int i : arr) {
+                if (i > mid) {
+                    sum += i - mid;
                 }
             }
-            if (length == m) {
-                result = i;
-                break;
-            }
-            if (length > m) {
-                length = 0;
-                continue;
+
+            if (sum < key) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+                result = mid;
             }
         }
-        bw.write(String.valueOf(result));
-        bw.close();
+        return result;
     }
 }
