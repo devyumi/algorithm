@@ -1,16 +1,18 @@
 package boj;
 
 import java.io.*;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
-//LIS, Binary Search
-public class No11053 {
+//lis, binary search
+public class No14003 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int n = Integer.parseInt(br.readLine());
         int[] arr = new int[n];
         int[] lis = new int[n];
+        int[] result = new int[n];
         int length = 0;
 
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -19,15 +21,30 @@ public class No11053 {
         }
 
         lis[length++] = arr[0];
+        result[0] = length;
         for (int i = 1; i < n; i++) {
             if (lis[length - 1] < arr[i]) {
                 lis[length++] = arr[i];
+                result[i] = length;
             } else {
                 int index = binarySearch(lis, arr[i], length);
                 lis[index] = arr[i];
+                result[i] = index + 1;
             }
         }
-        bw.write(String.valueOf(length));
+
+        bw.write(length + "\n");
+        Stack<Integer> stack = new Stack<>();
+        for (int i = n - 1; i >= 0; i--) {
+            if (result[i] == length) {
+                stack.push(arr[i]);
+                length--;
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            bw.write(stack.pop() + " ");
+        }
         bw.close();
     }
 
