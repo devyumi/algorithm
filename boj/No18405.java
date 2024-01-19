@@ -3,6 +3,7 @@ package boj;
 import java.io.*;
 import java.util.*;
 
+//bfs
 public class No18405 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
