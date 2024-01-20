@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-//bfs, 이코테에는 dfs로 소개되었지만 bfs로 풂 (개수 구하기)
+//bfs
 public class No53 {
     static int n;
     static int m;
@@ -39,7 +39,7 @@ public class No53 {
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
 
-        if(ice[x][y] == 1){
+        if (ice[x][y] == 1) {
             return 0;
         }
         Queue<Point> queue = new LinkedList<>();
