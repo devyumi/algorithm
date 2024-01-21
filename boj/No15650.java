@@ -3,7 +3,7 @@ package boj;
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class No15649 {
+public class No15650 {
     private static int n;
     private static int m;
     private static int[] arr;
@@ -19,11 +19,11 @@ public class No15649 {
         arr = new int[m];
         visited = new boolean[n + 1];
 
-        backTracking(0);
+        backTracking(1, 0);
         bw.close();
     }
 
-    private static void backTracking(int depth) throws IOException {
+    private static void backTracking(int start, int depth) throws IOException {
         if (depth == m) {
             for (int i : arr) {
                 bw.write(i + " ");
@@ -32,11 +32,11 @@ public class No15649 {
             return;
         }
 
-        for (int i = 1; i < n + 1; i++) {
+        for (int i = start; i < n + 1; i++) {
             if (!visited[i]) {
                 visited[i] = true;
                 arr[depth] = i;
-                backTracking(depth + 1);
+                backTracking(i + 1, depth + 1);
                 visited[i] = false;
             }
         }
