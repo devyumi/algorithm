@@ -2,7 +2,6 @@ package boj;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class No15486 {
@@ -11,7 +10,8 @@ public class No15486 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int n = Integer.parseInt(br.readLine());
         ArrayList<schedule> list = new ArrayList<>();
-        int[] dp = new int[1500001];
+        int[] dp = new int[n + 2];
+        int max = 0;
 
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -21,14 +21,17 @@ public class No15486 {
         }
 
         for (int i = 1; i < n + 1; i++) {
-            int nowTime = list.get(i - 1).time;
-            int nowPrice = list.get(i - 1).price;
-            if (i + nowTime <= n) {
-                dp[i] += nowPrice;
-                dp[i + nowTime] += nowPrice;
+            if (max < dp[i]) {
+                max = dp[i];
+            }
+
+            int day = i + list.get(i - 1).time;
+            if (day <= n + 1) {
+                dp[day] = Math.max(dp[day], max + list.get(i - 1).price);
             }
         }
-        bw.write(String.valueOf(Arrays.stream(dp).max().getAsInt()));
+
+        bw.write(String.valueOf(max));
         bw.close();
     }
 
