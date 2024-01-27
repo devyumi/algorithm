@@ -2,8 +2,10 @@ package boj;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
+//dp
 public class No15486 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -31,7 +33,7 @@ public class No15486 {
             }
         }
 
-        bw.write(String.valueOf(max));
+        bw.write(String.valueOf(Arrays.stream(dp).max().getAsInt()));
         bw.close();
     }
 
