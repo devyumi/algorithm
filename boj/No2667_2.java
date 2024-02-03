@@ -3,14 +3,13 @@ package boj;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
 
-//bfs
-public class No2667 {
+//dfs
+public class No2667_2 {
     private static int n;
     private static int[][] arr;
     private static boolean[][] visited;
+    private static int home;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,6 +17,7 @@ public class No2667 {
         n = Integer.parseInt(br.readLine());
         arr = new int[n][n];
         visited = new boolean[n][n];
+        home = 0;
         int result = 0;
         ArrayList<Integer> homeCount = new ArrayList<>();
 
@@ -32,8 +32,10 @@ public class No2667 {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (arr[i][j] == 1 && !visited[i][j]) {
-                    homeCount.add(bfs(i, j));
+                    home = dfs(i, j);
+                    homeCount.add(home);
                     result++;
+                    home = 0;
                 }
             }
         }
@@ -46,45 +48,21 @@ public class No2667 {
         bw.close();
     }
 
-    private static int bfs(int x, int y) {
-        int[] dx = {-1, 1, 0, 0};
-        int[] dy = {0, 0, -1, 1};
-        int homeCount = 0;
-
-        Queue<Point> queue = new LinkedList<>();
-        queue.offer(new Point(x, y));
-
-        arr[x][y] = 0;
-        visited[x][y] = true;
-        homeCount++;
-
-        while (!queue.isEmpty()) {
-            Point point = queue.poll();
-
-            for (int i = 0; i < 4; i++) {
-                int nx = point.x + dx[i];
-                int ny = point.y + dy[i];
-
-                if (nx >= 0 && nx < n && ny >= 0 && ny < n) {
-                    if (arr[nx][ny] == 1) {
-                        arr[nx][ny] = 0;
-                        visited[nx][ny] = true;
-                        queue.offer(new Point(nx, ny));
-                        homeCount++;
-                    }
-                }
-            }
+    private static int dfs(int x, int y) {
+        if (x < 0 || x >= n || y < 0 || y >= n) {
+            return 0;
         }
-        return homeCount;
-    }
 
-    private static class Point {
-        private int x;
-        private int y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
+        if (arr[x][y] == 1) {
+            arr[x][y] = 0;
+            visited[x][y] = true;
+            home++;
+            dfs(x - 1, y);
+            dfs(x + 1, y);
+            dfs(x, y - 1);
+            dfs(x, y + 1);
+            return home;
         }
+        return 0;
     }
 }
