@@ -1,4 +1,4 @@
-package boj;
+package boj.implementation;
 
 import java.io.*;
 import java.util.StringTokenizer;
@@ -33,7 +33,7 @@ public class No2979 {
                 result += c * 3;
             }
         }
-        
+
         bw.write(String.valueOf(result));
         bw.close();
     }
