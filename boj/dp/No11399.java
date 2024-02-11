@@ -9,23 +9,25 @@ public class No11399 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int n = Integer.parseInt(br.readLine());
-        int[] time = new int[n];
-        int[] dp = new int[1001];
+        int[] arr = new int[n];
+        int[] dp = new int[n];
         int result = 0;
+
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            time[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(time);
-        dp[1] = time[0];
-        for (int i = 2; i < n + 1; i++) {
-            dp[i] = dp[i - 1] + time[i - 1];
+        Arrays.sort(arr);
+        dp[0] = arr[0];
+        for (int i = 1; i < n; i++) {
+            dp[i] = dp[i - 1] + arr[i];
         }
 
-        for (int i = 1; i < n + 1; i++) {
-            result += dp[i];
+        for (int i : dp) {
+            result += i;
         }
+
         bw.write(String.valueOf(result));
         bw.close();
     }
