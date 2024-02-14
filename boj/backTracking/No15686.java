@@ -6,10 +6,10 @@ import java.util.StringTokenizer;
 
 public class No15686 {
     private static int m;
-    private static int min;
-    private static boolean[] visited;
-    private static ArrayList<Point> homes;
     private static ArrayList<Point> chickens;
+    private static ArrayList<Point> homes;
+    private static boolean[] visited;
+    private static int min = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,17 +17,16 @@ public class No15686 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        min = (int) 1e9;
-        homes = new ArrayList<>();
         chickens = new ArrayList<>();
+        homes = new ArrayList<>();
 
-        for (int i = 1; i < n + 1; i++) {
+        for (int i = 1; i <= n; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 1; j < n + 1; j++) {
-                int num = Integer.parseInt(st.nextToken());
-                if (num == 1) {
+            for (int j = 1; j <= n; j++) {
+                int tmp = Integer.parseInt(st.nextToken());
+                if (tmp == 1) {
                     homes.add(new Point(i, j));
-                } else if (num == 2) {
+                } else if (tmp == 2) {
                     chickens.add(new Point(i, j));
                 }
             }
@@ -35,21 +34,18 @@ public class No15686 {
 
         visited = new boolean[chickens.size()];
         backTracking(0, 0);
-
         bw.write(String.valueOf(min));
         bw.close();
     }
 
     private static void backTracking(int start, int depth) {
-        if (m == depth) {
+        if (depth == m) {
             int sum = 0;
             for (int i = 0; i < homes.size(); i++) {
-                int tmp = (int) 1e9;
-                int hx = homes.get(i).x;
-                int hy = homes.get(i).y;
+                int tmp = Integer.MAX_VALUE;
                 for (int j = 0; j < chickens.size(); j++) {
                     if (visited[j]) {
-                        int distance = Math.abs(chickens.get(j).x - hx) + Math.abs(chickens.get(j).y - hy);
+                        int distance = Math.abs(homes.get(i).x - chickens.get(j).x) + Math.abs(homes.get(i).y - chickens.get(j).y);
                         tmp = Math.min(tmp, distance);
                     }
                 }
