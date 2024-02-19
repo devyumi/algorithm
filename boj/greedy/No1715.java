@@ -1,4 +1,4 @@
-package boj;
+package boj.greedy;
 
 import java.io.*;
 import java.util.PriorityQueue;

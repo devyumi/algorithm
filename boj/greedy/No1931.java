@@ -1,4 +1,4 @@
-package boj;
+package boj.greedy;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class No1931 {
                 result++;
             }
         }
-        
+
         bw.write(String.valueOf(result));
         bw.close();
     }
