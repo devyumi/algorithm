@@ -1,4 +1,4 @@
-package boj;
+package boj.shortestPath;
 
 import java.io.*;
 import java.util.Arrays;
