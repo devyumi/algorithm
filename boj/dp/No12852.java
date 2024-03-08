@@ -37,7 +37,7 @@ public class No12852 {
             }
             sb.append(n).append(" ");
         }
-        bw.write(sb.toString());
+        bw.write(sb.deleteCharAt(sb.length() - 1).toString());
         bw.close();
     }
 }
