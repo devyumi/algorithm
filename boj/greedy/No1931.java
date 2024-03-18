@@ -11,7 +11,7 @@ public class No1931 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int n = Integer.parseInt(br.readLine());
         ArrayList<Time> time = new ArrayList<>();
-        int result = 0;
+        int answer = 0;
 
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -28,14 +28,14 @@ public class No1931 {
         });
 
         int endTime = 0;
-        for (int i = 0; i < n; i++) {
-            if (time.get(i).start >= endTime) {
-                endTime = time.get(i).end;
-                result++;
+        for (Time t : time) {
+            if (t.start >= endTime) {
+                answer++;
+                endTime = t.end;
             }
         }
-
-        bw.write(String.valueOf(result));
+        
+        bw.write(String.valueOf(answer));
         bw.close();
     }
 
