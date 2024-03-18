@@ -1,8 +1,8 @@
 package boj.greedy;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.StringTokenizer;
 
 public class No1946 {
@@ -10,39 +10,31 @@ public class No1946 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int t = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         for (int k = 0; k < t; k++) {
             int n = Integer.parseInt(br.readLine());
-            ArrayList<Test> test = new ArrayList<>();
-            int result = 1;
+            int[][] arr = new int[n][2];
+            int answer = 1;
 
             for (int i = 0; i < n; i++) {
                 StringTokenizer st = new StringTokenizer(br.readLine());
-                int first = Integer.parseInt(st.nextToken());
-                int second = Integer.parseInt(st.nextToken());
-                test.add(new Test(first, second));
+                arr[i][0] = Integer.parseInt(st.nextToken());
+                arr[i][1] = Integer.parseInt(st.nextToken());
             }
 
-            Collections.sort(test, (o1, o2) -> o1.first - o2.first);
-            int min = test.get(0).second;
-            for (int i = 1; i < n; i++) {
-                if (test.get(i).second < min) {
-                    result++;
-                    min = test.get(i).second;
+            Arrays.sort(arr, Comparator.comparingInt(o -> o[0]));
+            int min = arr[0][1];
+
+            for (int[] i : arr) {
+                if (min > i[1]) {
+                    answer++;
+                    min = i[1];
                 }
             }
-            bw.write(result + "\n");
+            sb.append(answer).append("\n");
         }
+        bw.write(sb.deleteCharAt(sb.length() - 1).toString());
         bw.close();
-    }
-
-    private static class Test {
-        private int first;
-        private int second;
-
-        public Test(int first, int second) {
-            this.first = first;
-            this.second = second;
-        }
     }
 }
