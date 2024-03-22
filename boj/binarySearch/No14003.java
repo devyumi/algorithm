@@ -41,9 +41,11 @@ public class No14003 {
             }
         }
 
+        StringBuilder sb = new StringBuilder();
         while (!stack.isEmpty()) {
-            bw.write(stack.pop() + " ");
+            sb.append(stack.pop()).append(" ");
         }
+        bw.write(sb.deleteCharAt(sb.length() - 1).toString());
         bw.close();
     }
 
