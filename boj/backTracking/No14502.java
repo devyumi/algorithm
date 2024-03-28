@@ -10,10 +10,14 @@ public class No14502 {
     private static int n;
     private static int m;
     private static int[][] arr;
-    private static ArrayList<Point> safety;
     private static ArrayList<Point> virus;
-    private static boolean[] visited;
-    private static int max;
+    private static ArrayList<Point> safety;
+    private static boolean[] visitedList;
+    private static boolean[][] visitedArr;
+    private static int[][] virusArr;
+    private static int[] dx = {-1, 1, 0, 0};
+    private static int[] dy = {0, 0, -1, 1};
+    private static int answer = -1;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,14 +25,13 @@ public class No14502 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        arr = new int[n + 1][m + 1];
-        safety = new ArrayList<>();
+        arr = new int[n][m];
         virus = new ArrayList<>();
-        max = -(int) 1e9;
+        safety = new ArrayList<>();
 
-        for (int i = 1; i < n + 1; i++) {
+        for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 1; j < m + 1; j++) {
+            for (int j = 0; j < m; j++) {
                 arr[i][j] = Integer.parseInt(st.nextToken());
                 if (arr[i][j] == 0) {
                     safety.add(new Point(i, j));
@@ -37,76 +40,69 @@ public class No14502 {
                 }
             }
         }
-        visited = new boolean[safety.size()];
+
+        visitedList = new boolean[safety.size()];
         backTracking(0, 0);
-        bw.write(String.valueOf(max));
+        bw.write(String.valueOf(answer));
         bw.close();
     }
 
     private static void backTracking(int start, int depth) {
         if (depth == 3) {
-            int result = 0;
-
-            int[][] virusArr = new int[n + 1][m + 1];
-
-            for (int i = 1; i < n + 1; i++) {
-                for (int j = 1; j < m + 1; j++) {
-                    virusArr[i][j] = arr[i][j];
-                }
-            }
-
-            bfs(virusArr);
-
-            for (int i = 1; i < n + 1; i++) {
-                for (int j = 1; j < m + 1; j++) {
-                    if (virusArr[i][j] == 0) {
-                        result++;
-                    }
-                }
-            }
-
-            max = Math.max(max, result);
+            bfs();
             return;
         }
 
         for (int i = start; i < safety.size(); i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                int x = safety.get(i).x;
-                int y = safety.get(i).y;
-
-                arr[x][y] = 1;
+            if (!visitedList[i]) {
+                visitedList[i] = true;
+                arr[safety.get(i).x][safety.get(i).y] = 1;
                 backTracking(i + 1, depth + 1);
-                visited[i] = false;
-                arr[x][y] = 0;
+                visitedList[i] = false;
+                arr[safety.get(i).x][safety.get(i).y] = 0;
             }
         }
     }
 
-    private static void bfs(int[][] virusArr) {
-        int[] dx = {-1, 1, 0, 0};
-        int[] dy = {0, 0, -1, 1};
-
+    private static void bfs() {
+        virusArr = new int[n][m];
+        visitedArr = new boolean[n][m];
+        int safetyMax = 0;
         Queue<Point> queue = new LinkedList<>();
         for (Point p : virus) {
-            queue.add(p);
+            queue.offer(new Point(p.x, p.y));
+            visitedArr[p.x][p.y] = true;
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                virusArr[i][j] = arr[i][j];
+            }
         }
 
         while (!queue.isEmpty()) {
             Point now = queue.poll();
-
             for (int i = 0; i < 4; i++) {
                 int nx = now.x + dx[i];
                 int ny = now.y + dy[i];
-
-                if (nx >= 1 && nx <= n && ny >= 1 && ny <= m) {
-                    if (virusArr[nx][ny] == 0) {
+                if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
+                    if (virusArr[nx][ny] == 0 && !visitedArr[nx][ny]) {
                         virusArr[nx][ny] = 2;
-                        queue.add(new Point(nx, ny));
+                        visitedArr[nx][ny] = true;
+                        queue.offer(new Point(nx, ny));
                     }
                 }
             }
         }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (virusArr[i][j] == 0) {
+                    safetyMax++;
+                }
+            }
+        }
+        answer = Math.max(answer, safetyMax);
     }
 
     private static class Point {
