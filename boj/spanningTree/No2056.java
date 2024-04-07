@@ -1,4 +1,4 @@
-package boj;
+package boj.spanningTree;
 
 import java.io.*;
 import java.util.*;
