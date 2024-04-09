@@ -17,9 +17,9 @@ public class No1743 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
         arr = new int[n][m];
         visited = new boolean[n][m];
-        int k = Integer.parseInt(st.nextToken());
         int max = 0;
 
         for (int i = 0; i < k; i++) {
@@ -36,7 +36,6 @@ public class No1743 {
                 }
             }
         }
-
         bw.write(String.valueOf(max));
         bw.close();
     }
@@ -44,20 +43,18 @@ public class No1743 {
     private static int bfs(int x, int y) {
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
-        int result = 0;
+        int answer = 0;
 
         Queue<Point> queue = new LinkedList<>();
         queue.offer(new Point(x, y));
-
         if (arr[x][y] == 1) {
-            result++;
             arr[x][y] = 0;
             visited[x][y] = true;
+            answer++;
         }
 
         while (!queue.isEmpty()) {
             Point point = queue.poll();
-
             for (int i = 0; i < 4; i++) {
                 int nx = point.x + dx[i];
                 int ny = point.y + dy[i];
@@ -67,12 +64,12 @@ public class No1743 {
                         arr[nx][ny] = 0;
                         visited[nx][ny] = true;
                         queue.offer(new Point(nx, ny));
-                        result++;
+                        answer++;
                     }
                 }
             }
         }
-        return result;
+        return answer;
     }
 
     private static class Point {
