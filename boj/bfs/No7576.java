@@ -21,7 +21,7 @@ public class No7576 {
         arr = new Tomato[n][m];
         visited = new boolean[n][m];
         queue = new LinkedList<>();
-        int maxDay = 0;
+        int max = 0;
 
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
@@ -43,12 +43,13 @@ public class No7576 {
             } else {
                 for (int i = 0; i < n; i++) {
                     for (int j = 0; j < m; j++) {
-                        maxDay = Math.max(maxDay, arr[i][j].day);
+                        max = Math.max(max, arr[i][j].day);
                     }
                 }
-                bw.write(String.valueOf(maxDay));
+                bw.write(String.valueOf(max));
             }
         }
+
         bw.close();
     }
 
