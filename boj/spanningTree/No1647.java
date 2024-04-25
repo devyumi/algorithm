@@ -15,8 +15,8 @@ public class No1647 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-        ArrayList<Edge> graph = new ArrayList<>();
         int[] parent = new int[n + 1];
+        ArrayList<Edge> graph = new ArrayList<>();
         result = new ArrayList<>();
         int answer = 0;
 
@@ -31,8 +31,8 @@ public class No1647 {
             int w = Integer.parseInt(st.nextToken());
             graph.add(new Edge(a, b, w));
         }
-
         kruskal(graph, parent);
+
         for (int i = 0; i < result.size() - 1; i++) {
             answer += result.get(i);
         }
@@ -42,7 +42,6 @@ public class No1647 {
 
     private static void kruskal(ArrayList<Edge> graph, int[] parent) {
         Collections.sort(graph, Comparator.comparingInt(o -> o.weight));
-
         for (Edge edge : graph) {
             if (find(parent, edge.x) != find(parent, edge.y)) {
                 union(parent, edge.x, edge.y);
