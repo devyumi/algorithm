@@ -3,8 +3,6 @@ package swea.d3;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class No10570 {
@@ -21,9 +19,9 @@ public class No10570 {
             int answer = 0;
 
             for (int i = a; i <= b; i++) {
-                if (palindrome(String.valueOf(i))) {
+                if (isPalindrome(String.valueOf(i))) {
                     if (Math.sqrt(i) == Math.floor(Math.sqrt(i))) {
-                        if (palindrome(String.valueOf((int) Math.sqrt(i)))) {
+                        if (isPalindrome(String.valueOf((int) Math.sqrt(i)))) {
                             answer++;
                         }
                     }
@@ -35,24 +33,15 @@ public class No10570 {
         br.close();
     }
 
-    private static boolean palindrome(String n) {
+    private static boolean isPalindrome(String n) {
         char[] chars = n.toCharArray();
-        Deque<Character> deque = new LinkedList<>();
+        int end = chars.length - 1;
 
-        for (char c : chars) {
-            deque.offer(c);
-        }
-
-        while (deque.size() > 1) {
-            char first = deque.peekFirst();
-            char end = deque.peekLast();
-
-            if (first == end) {
-                deque.pollFirst();
-                deque.pollLast();
-            } else {
+        for (int i = 0; i < chars.length / 2; i++) {
+            if (chars[i] != chars[end]) {
                 return false;
             }
+            end--;
         }
         return true;
     }
