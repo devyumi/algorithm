@@ -49,7 +49,6 @@ public class No7576 {
                 bw.write(String.valueOf(max));
             }
         }
-
         bw.close();
     }
 
@@ -78,9 +77,9 @@ public class No7576 {
 
                 if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
                     if (arr[nx][ny].state == 0 && !visited[nx][ny]) {
+                        visited[nx][ny] = true;
                         arr[nx][ny].state = 1;
                         arr[nx][ny].day += arr[now.x][now.y].day + 1;
-                        visited[nx][ny] = true;
                         queue.offer(new Point(nx, ny));
                     }
                 }
@@ -89,8 +88,8 @@ public class No7576 {
     }
 
     private static class Tomato {
-        int state;
-        int day;
+        private int state;
+        private int day;
 
         public Tomato(int state, int day) {
             this.state = state;
@@ -99,8 +98,8 @@ public class No7576 {
     }
 
     private static class Point {
-        int x;
-        int y;
+        private int x;
+        private int y;
 
         public Point(int x, int y) {
             this.x = x;
