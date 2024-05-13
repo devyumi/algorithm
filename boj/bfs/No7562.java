@@ -1,63 +1,60 @@
 package boj.bfs;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class No7562 {
-    private static int n;
+    private static int i;
     private static int[][] arr;
     private static boolean[][] visited;
-    private static Point arrival;
+    private static final int[] dx = {-2, -2, -1, -1, 1, 1, 2, 2};
+    private static final int[] dy = {1, -1, 2, -2, 2, -2, 1, -1};
+    private static Point to;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int t = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
+        int tc = Integer.parseInt(br.readLine());
 
-        for (int k = 0; k < t; k++) {
-            n = Integer.parseInt(br.readLine());
-            arr = new int[n][n];
-            visited = new boolean[n][n];
+        for (int t = 1; t <= tc; t++) {
+            i = Integer.parseInt(br.readLine());
+            arr = new int[i][i];
+            visited = new boolean[i][i];
+
             StringTokenizer st = new StringTokenizer(br.readLine());
-            Point now = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+            Point from = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
             st = new StringTokenizer(br.readLine());
-            arrival = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
-
-            bfs(now.x, now.y);
-            sb.append(arr[arrival.x][arrival.y]).append("\n");
+            to = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+            bfs(from.x, from.y);
+            sb.append(arr[to.x][to.y]).append("\n");
         }
-        bw.write(sb.deleteCharAt(sb.length() - 1).toString());
-        bw.close();
+        System.out.print(sb.deleteCharAt(sb.length() - 1));
+        br.close();
     }
 
     private static void bfs(int x, int y) {
-        int[] dx = {-2, -2, -1, -1, 2, 2, 1, 1};
-        int[] dy = {1, -1, 2, -2, -1, 1, -2, 2};
-
         Queue<Point> queue = new LinkedList<>();
         queue.offer(new Point(x, y));
         visited[x][y] = true;
 
         while (!queue.isEmpty()) {
             Point now = queue.poll();
-
-            if (now.x == arrival.x && now.y == arrival.y) {
+            if (now.x == to.x && now.y == to.y) {
                 return;
             }
 
-            for (int i = 0; i < 8; i++) {
-                int nextX = now.x + dx[i];
-                int nextY = now.y + dy[i];
+            for (int j = 0; j < 8; j++) {
+                int nx = now.x + dx[j];
+                int ny = now.y + dy[j];
 
-                if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < n) {
-                    if (!visited[nextX][nextY]) {
-                        arr[nextX][nextY] = arr[now.x][now.y] + 1;
-                        queue.offer(new Point(nextX, nextY));
-                        visited[nextX][nextY] = true;
-                    }
+                if (nx >= 0 && nx < i && ny >= 0 && ny < i && !visited[nx][ny]) {
+                    arr[nx][ny] = arr[now.x][now.y] + 1;
+                    visited[nx][ny] = true;
+                    queue.offer(new Point(nx, ny));
                 }
             }
         }

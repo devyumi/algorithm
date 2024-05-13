@@ -1,15 +1,12 @@
-package boj.bfs;
+package swea.d4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class No2667 {
-    private static int n;
+public class No1227 {
     private static char[][] arr;
     private static boolean[][] visited;
     private static final int[] dx = {-1, 1, 0, 0};
@@ -19,32 +16,18 @@ public class No2667 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        n = Integer.parseInt(br.readLine());
-        arr = new char[n][n];
-        visited = new boolean[n][n];
-        ArrayList<Integer> list = new ArrayList<>();
-        int count = 0;
+        for (int t = 1; t <= 10; t++) {
+            arr = new char[100][100];
+            visited = new boolean[100][100];
 
-        for (int i = 0; i < n; i++) {
-            char[] tmp = br.readLine().toCharArray();
-            for (int j = 0; j < n; j++) {
-                arr[i][j] = tmp[j];
-            }
-        }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (arr[i][j] == '1' && !visited[i][j]) {
-                    list.add(bfs(i, j));
-                    count++;
+            sb.append("#" + br.readLine() + " ");
+            for (int i = 0; i < 100; i++) {
+                char[] tmp = br.readLine().toCharArray();
+                for (int j = 0; j < 100; j++) {
+                    arr[i][j] = tmp[j];
                 }
             }
-        }
-
-        Collections.sort(list);
-        sb.append(count).append("\n");
-        for (int i : list) {
-            sb.append(i).append("\n");
+            sb.append(bfs(1, 1)).append("\n");
         }
         System.out.print(sb.deleteCharAt(sb.length() - 1));
         br.close();
@@ -54,23 +37,24 @@ public class No2667 {
         Queue<Point> queue = new LinkedList<>();
         queue.offer(new Point(x, y));
         visited[x][y] = true;
-        int sum = 1;
 
         while (!queue.isEmpty()) {
             Point now = queue.poll();
+            if (arr[now.x][now.y] == '3') {
+                return 1;
+            }
 
             for (int i = 0; i < 4; i++) {
                 int nx = now.x + dx[i];
                 int ny = now.y + dy[i];
 
-                if (nx >= 0 && nx < n && ny >= 0 && ny < n && arr[nx][ny] == '1' && !visited[nx][ny]) {
+                if (nx >= 0 && nx < 100 && ny >= 0 && ny < 100 && arr[nx][ny] != '1' && !visited[nx][ny]) {
                     visited[nx][ny] = true;
-                    sum++;
                     queue.offer(new Point(nx, ny));
                 }
             }
         }
-        return sum;
+        return 0;
     }
 
     private static class Point {
