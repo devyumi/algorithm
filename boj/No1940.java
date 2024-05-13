@@ -22,11 +22,10 @@ public class No1940 {
         int start = 0;
         int end = n - 1;
 
-        while (start < end) {
+        while (start != end) {
             if (arr[start] + arr[end] == m) {
                 answer++;
                 start++;
-                end--;
             } else if (arr[start] + arr[end] < m) {
                 start++;
             } else {
