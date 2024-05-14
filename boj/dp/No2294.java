@@ -21,13 +21,13 @@ public class No2294 {
             dp[i] = (int) 1e9;
         }
 
-        for (int i = 1; i < n + 1; i++) {
+        for (int i = 0; i < n; i++) {
             for (int j = value[i]; j < k + 1; j++) {
                 dp[j] = Math.min(dp[j], dp[j - value[i]] + 1);
             }
         }
 
-        if (dp[k] >= (int) 1e9) {
+        if (dp[k] == (int) 1e9) {
             bw.write("-1");
         } else {
             bw.write(String.valueOf(dp[k]));
