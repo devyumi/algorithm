@@ -11,6 +11,7 @@ public class No11048 {
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         int[][] arr = new int[n][m];
+        int[][] dp = new int[n + 1][m + 1];
 
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
@@ -19,19 +20,12 @@ public class No11048 {
             }
         }
 
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (i - 1 >= 0 && j - 1 >= 0) {
-                    arr[i][j] = Math.max(arr[i][j] + arr[i - 1][j], arr[i][j] + arr[i][j - 1]);
-                } else if (i - 1 >= 0 && j - 1 < 0) {
-                    arr[i][j] = arr[i][j] + arr[i - 1][j];
-                } else if (i - 1 < 0 && j - 1 >= 0) {
-                    arr[i][j] = arr[i][j] + arr[i][j - 1];
-                }
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < m + 1; j++) {
+                dp[i][j] = Math.max(Math.max(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + arr[i - 1][j - 1];
             }
         }
-        bw.write(String.valueOf(arr[n - 1][m - 1]));
+        bw.write(String.valueOf(dp[n][m]));
         bw.close();
     }
 }
