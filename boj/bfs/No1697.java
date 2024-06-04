@@ -6,52 +6,40 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class No1697 {
-    private static int k;
-    private static boolean[] visited;
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
-        visited = new boolean[100001];
-
-        bw.write(String.valueOf(bfs(n)));
+        int k = Integer.parseInt(st.nextToken());
+        int[] arr = new int[100001];
+        bw.write(String.valueOf(bfs(arr, n, k)));
         bw.close();
     }
 
-    private static int bfs(int start) {
-        Queue<Hiding> queue = new LinkedList<>();
-        queue.offer(new Hiding(start, 0));
+    private static int bfs(int[] arr, int n, int k) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(n);
 
         while (!queue.isEmpty()) {
-            Hiding tmp = queue.poll();
-            if (tmp.x < 0 || tmp.x > 100000) {
-                continue;
+            int now = queue.poll();
+            if (now == k) {
+                break;
             }
 
-            if (tmp.x == k) {
-                return tmp.second;
+            if (now - 1 >= 0 && now - 1 < 100001 && arr[now - 1] == 0) {
+                arr[now - 1] = arr[now] + 1;
+                queue.offer(now - 1);
             }
-
-            if (!visited[tmp.x]) {
-                visited[tmp.x] = true;
-                queue.offer(new Hiding(tmp.x - 1, tmp.second + 1));
-                queue.offer(new Hiding(tmp.x + 1, tmp.second + 1));
-                queue.offer(new Hiding(tmp.x * 2, tmp.second + 1));
+            if (now + 1 >= 0 && now + 1 < 100001 && arr[now + 1] == 0) {
+                arr[now + 1] = arr[now] + 1;
+                queue.offer(now + 1);
+            }
+            if (now * 2 >= 0 && now * 2 < 100001 && arr[now * 2] == 0) {
+                arr[now * 2] = arr[now] + 1;
+                queue.offer(now * 2);
             }
         }
-        return 0;
-    }
-
-    private static class Hiding {
-        private int x;
-        private int second;
-
-        public Hiding(int x, int second) {
-            this.x = x;
-            this.second = second;
-        }
+        return arr[k];
     }
 }
