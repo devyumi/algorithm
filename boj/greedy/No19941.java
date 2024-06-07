@@ -10,35 +10,28 @@ public class No19941 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
-        char[] arr = new char[n];
+        char[] arr = br.readLine().toCharArray();
         boolean[] visited = new boolean[n];
-        int result = 0;
-
-        String[] str = br.readLine().split("");
-        for (int i = 0; i < n; i++) {
-            arr[i] = str[i].charAt(0);
-        }
+        int answer = 0;
 
         for (int i = 0; i < n; i++) {
             if (arr[i] == 'P') {
-                int tmp = 0;
+                boolean tmp = false;
                 for (int j = k; j > 0; j--) {
-                    if (i - j >= 0 && arr[i - j] == 'H') {
-                        if (!visited[i - j]) {
-                            result++;
-                            visited[i - j] = true;
-                            tmp = 1;
-                            break;
-                        }
+                    if (i - j >= 0 && arr[i - j] == 'H' && !visited[i - j]) {
+                        tmp = true;
+                        visited[i - j] = true;
+                        answer++;
+                        break;
                     }
                 }
 
-                if (tmp == 0) {
+                if (!tmp) {
                     for (int j = 1; j <= k; j++) {
-                        if (i + j < n && arr[i + j] == 'H') {
+                        if (i + j < n && arr[i + j] == 'H' && !visited[i + j]) {
                             if (!visited[i + j]) {
-                                result++;
                                 visited[i + j] = true;
+                                answer++;
                                 break;
                             }
                         }
@@ -46,7 +39,7 @@ public class No19941 {
                 }
             }
         }
-        bw.write(String.valueOf(result));
+        bw.write(String.valueOf(answer));
         bw.close();
     }
 }
