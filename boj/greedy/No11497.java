@@ -1,42 +1,50 @@
 package boj.greedy;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class No11497 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int t = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
+        int tc = Integer.parseInt(br.readLine());
 
-        for (int k = 0; k < t; k++) {
+        for (int t = 1; t <= tc; t++) {
             int n = Integer.parseInt(br.readLine());
-            Integer[] arr = new Integer[n];
+            int[] arr = new int[n];
+            int[] arr2 = new int[n];
             StringTokenizer st = new StringTokenizer(br.readLine());
             for (int i = 0; i < n; i++) {
                 arr[i] = Integer.parseInt(st.nextToken());
             }
 
-            Arrays.sort(arr, Collections.reverseOrder());
-            Deque<Integer> deque = new LinkedList<>();
-            deque.offer(arr[0]);
+            Arrays.sort(arr);
+            int start = 0;
+            int end = n;
+            boolean isStartFill = false;
 
-            for (int i = 1; i < n; i++) {
-                if (i % 2 == 0) {
-                    deque.offerFirst(arr[i]);
+            for (int i = 0; i < n; i++) {
+                if (!isStartFill) {
+                    arr2[start] = arr[i];
+                    end--;
+                    isStartFill = true;
                 } else {
-                    deque.offerLast(arr[i]);
+                    arr2[end] = arr[i];
+                    start++;
+                    isStartFill = false;
                 }
             }
 
-            int max = Math.abs(deque.peekFirst() - deque.peekLast());
-            while (deque.size() != 1) {
-                max = Math.max(max, Math.abs(deque.pollFirst() - deque.peekFirst()));
+            int min = Math.abs(arr2[0] - arr2[n - 1]);
+            for (int i = 1; i < n; i++) {
+                min = Math.max(min, Math.abs(arr2[i] - arr2[i - 1]));
             }
-            sb.append(max).append("\n");
+            sb.append(min).append("\n");
         }
-        bw.write(sb.deleteCharAt(sb.length() - 1).toString());
-        bw.close();
+        System.out.print(sb.deleteCharAt(sb.length() - 1));
+        br.close();
     }
 }
