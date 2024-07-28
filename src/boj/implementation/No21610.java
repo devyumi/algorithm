@@ -34,14 +34,14 @@ public class No21610 {
     queue.offer(new Point(n - 2, 0));
     queue.offer(new Point(n - 2, 1));
 
-    // 1. 구름 이동
+    //1. 구름 이동
     for (int i = 0; i < m; i++) {
       visited = new boolean[n][n];
       st = new StringTokenizer(br.readLine());
       int d = Integer.parseInt(st.nextToken()) - 1; //방향
       int s = Integer.parseInt(st.nextToken());     //위치
 
-      // 2. 구름 이동 후 Point에 비++, 3. 구름 제거
+      //2. 구름 이동 후 Point에 비++, 3. 구름 제거
       int size = queue.size();
       for (int j = 0; j < queue.size(); j++) {
         Point now = queue.poll();
@@ -54,10 +54,10 @@ public class No21610 {
         queue.offer(new Point(nx, ny));
       }
 
-      // 4. 대각선에 비 있으면 + 1
+      //4. 대각선에 비 있으면 + 1
       addAmount(arr, queue);
 
-      // 5. 비의 양 >= 2 인 모든 곳에 구름 추가 및 비의 양 - 2
+      //5. 비의 양 >= 2 인 모든 곳에 구름 추가 및 비의 양 - 2
       decreaseAmount(arr, visited, queue);
     }
 
@@ -85,7 +85,7 @@ public class No21610 {
       for (int j = 0; j < arr[i].length; j++) {
         if (!visited[i][j] && arr[i][j] >= 2) {
           arr[i][j] -= 2;
-          queue.offer(new Point(i, j)); // 구름 생긴 곳의 point 값 추가
+          queue.offer(new Point(i, j)); //구름 생긴 곳의 point 값 추가
         }
       }
     }
