@@ -59,30 +59,26 @@ public class No17140 {
                     for (int j = 0; j < col; j++) {
                         //숫자, 등장 횟수 저장
                         map.put(arr[i][j], map.getOrDefault(arr[i][j], 0) + 1);
+                    }
 
-                        List<Entry<Integer, Integer>> mapList = new LinkedList<>(map.entrySet());
-                        //value, key 순 오름차순 정렬
-                        Collections.sort(mapList, new Comparator<Entry<Integer, Integer>>() {
-                            @Override
-                            public int compare(Entry<Integer, Integer> o1, Entry<Integer, Integer> o2) {
-                                if (o1.getValue() == o2.getValue()) {
-                                    return o1.getKey() - o2.getKey();
-                                }
-                                return o1.getValue() - o2.getValue();
+                    List<Entry<Integer, Integer>> mapList = new LinkedList<>(map.entrySet());
+                    //value, key 순 오름차순 정렬
+                    Collections.sort(mapList, new Comparator<Entry<Integer, Integer>>() {
+                        @Override
+                        public int compare(Entry<Integer, Integer> o1, Entry<Integer, Integer> o2) {
+                            if (o1.getValue() == o2.getValue()) {
+                                return o1.getKey() - o2.getKey();
                             }
-                        });
-
-                        maxSize = Math.max(maxSize, mapList.size());
-                        result[index++] = mapList.size();
-                        System.out.println("size: " + result[index - 1]);
-                        for (Entry<Integer, Integer> cal : mapList) {
-                            result[index++] = cal.getKey();
-                            System.out.println("key = " + result[index - 1]);
-                            result[index++] = cal.getValue();
-                            System.out.println("value = " + result[index - 1]);
+                            return o1.getValue() - o2.getValue();
                         }
-                        System.out.println();
-                        System.out.println("=".repeat(50));
+                    });
+
+                    maxSize = Math.max(maxSize, mapList.size());
+                    result[index++] = mapList.size();
+
+                    for (Entry<Integer, Integer> cal : mapList) {
+                        result[index++] = cal.getKey();
+                        result[index++] = cal.getValue();
                     }
                 }
 
@@ -91,7 +87,7 @@ public class No17140 {
                     maxSize = 100;
                 }
 
-                col = maxSize;
+                col += maxSize;
                 arr = new int[row][col]; //열만 갱신
 
                 int resultIndex = 0;
@@ -102,14 +98,22 @@ public class No17140 {
                         break Loop;
                     }
                     int colIndex = result[resultIndex++];
-                    for (int j = 0; j < colIndex; j++) {
+                    for (int j = 0; j < colIndex * 2; j++) {
                         if (result[resultIndex] == 0) {
                             break Loop;
                         }
-
                         arr[i][j] = result[resultIndex++];
                     }
                 }
+
+                for (int i = 0; i < row; i++) {
+                    for (int j = 0; j < col; j++) {
+                        System.out.print(arr[i][j] + " ");
+                    }
+                    System.out.println();
+                }
+                System.out.println();
+                System.out.println();
 
             } else {
 
@@ -123,26 +127,26 @@ public class No17140 {
                     for (int i = 0; i < row; i++) {
                         //숫자, 등장 횟수 저장
                         map.put(arr[i][j], map.getOrDefault(arr[i][j], 0) + 1);
+                    }
 
-                        List<Entry<Integer, Integer>> mapList = new LinkedList<>(map.entrySet());
+                    List<Entry<Integer, Integer>> mapList = new LinkedList<>(map.entrySet());
 
-                        //value, key 순 오름차순 정렬
-                        Collections.sort(mapList, new Comparator<Entry<Integer, Integer>>() {
-                            @Override
-                            public int compare(Entry<Integer, Integer> o1, Entry<Integer, Integer> o2) {
-                                if (o1.getValue() == o2.getValue()) {
-                                    return o1.getKey() - o2.getKey();
-                                }
-                                return o1.getValue() - o2.getValue();
+                    //value, key 순 오름차순 정렬
+                    Collections.sort(mapList, new Comparator<Entry<Integer, Integer>>() {
+                        @Override
+                        public int compare(Entry<Integer, Integer> o1, Entry<Integer, Integer> o2) {
+                            if (o1.getValue() == o2.getValue()) {
+                                return o1.getKey() - o2.getKey();
                             }
-                        });
-
-                        maxSize = Math.max(maxSize, mapList.size());
-                        result[index++] = mapList.size();
-                        for (Entry<Integer, Integer> cal : mapList) {
-                            result[index++] = cal.getKey();
-                            result[index++] = cal.getValue();
+                            return o1.getValue() - o2.getValue();
                         }
+                    });
+
+                    maxSize = Math.max(maxSize, mapList.size());
+                    result[index++] = mapList.size();
+                    for (Entry<Integer, Integer> cal : mapList) {
+                        result[index++] = cal.getKey();
+                        result[index++] = cal.getValue();
                     }
                 }
 
@@ -151,7 +155,7 @@ public class No17140 {
                     maxSize = 100;
                 }
 
-                row = maxSize;
+                row += maxSize;
                 arr = new int[row][col]; // 행만 갱신
 
                 int resultIndex = 0;
@@ -163,11 +167,10 @@ public class No17140 {
                     }
 
                     int rowIndex = result[resultIndex++];
-                    for (int i = 0; i < rowIndex; i++) {
+                    for (int i = 0; i < rowIndex * 2; i++) {
                         if (result[resultIndex] == 0) {
                             break Loop;
                         }
-
                         arr[i][j] = result[resultIndex++];
                     }
                 }
