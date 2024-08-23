@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
-//미완성
 public class No17140 {
 
     public static void main(String[] args) throws IOException {
@@ -41,16 +40,16 @@ public class No17140 {
                 break;
             }
 
-            if (arr[r][c] == k) {
+            if (row - 1 >= r && col - 1 >= c && arr[r][c] == k) {
                 break;
             }
             time++;
 
-            //r >= c: 행 연산 / r < c: 열 연산
+            //r >= c: 행 연산 | r < c: 열 연산
             if (row >= col) {
 
-                //연산 개수, 결과를 저장하는 배열 (크기 100)
-                int[] result = new int[100];
+                //연산 개수, 결과를 저장하는 배열 (최대 100 * 100 + 1)
+                int[] result = new int[10001];
                 int index = 0;
                 int maxSize = -1;
 
@@ -58,7 +57,9 @@ public class No17140 {
                     Map<Integer, Integer> map = new HashMap<>();
                     for (int j = 0; j < col; j++) {
                         //숫자, 등장 횟수 저장
-                        map.put(arr[i][j], map.getOrDefault(arr[i][j], 0) + 1);
+                        if (arr[i][j] != 0) {
+                            map.put(arr[i][j], map.getOrDefault(arr[i][j], 0) + 1);
+                        }
                     }
 
                     List<Entry<Integer, Integer>> mapList = new LinkedList<>(map.entrySet());
@@ -83,11 +84,11 @@ public class No17140 {
                 }
 
                 //계산 끝. 배열 갱신
-                if (maxSize > 100) {
-                    maxSize = 100;
+                if (maxSize >= 100) {
+                    maxSize = 50;
                 }
 
-                col += maxSize;
+                col = maxSize * 2;
                 arr = new int[row][col]; //열만 갱신
 
                 int resultIndex = 0;
@@ -106,19 +107,10 @@ public class No17140 {
                     }
                 }
 
-                for (int i = 0; i < row; i++) {
-                    for (int j = 0; j < col; j++) {
-                        System.out.print(arr[i][j] + " ");
-                    }
-                    System.out.println();
-                }
-                System.out.println();
-                System.out.println();
-
             } else {
 
-                //연산 개수, 결과를 저장하는 배열 (크기 100)
-                int[] result = new int[100];
+                //연산 개수, 결과를 저장하는 배열 (최대 100 * 100 + 1)
+                int[] result = new int[10001];
                 int index = 0;
                 int maxSize = -1;
 
@@ -126,7 +118,9 @@ public class No17140 {
                     Map<Integer, Integer> map = new HashMap<>();
                     for (int i = 0; i < row; i++) {
                         //숫자, 등장 횟수 저장
-                        map.put(arr[i][j], map.getOrDefault(arr[i][j], 0) + 1);
+                        if (arr[i][j] != 0) {
+                            map.put(arr[i][j], map.getOrDefault(arr[i][j], 0) + 1);
+                        }
                     }
 
                     List<Entry<Integer, Integer>> mapList = new LinkedList<>(map.entrySet());
@@ -151,11 +145,11 @@ public class No17140 {
                 }
 
                 //계산 끝. 배열 갱신
-                if (maxSize > 100) {
-                    maxSize = 100;
+                if (maxSize >= 100) {
+                    maxSize = 50;
                 }
 
-                row += maxSize;
+                row = maxSize * 2;
                 arr = new int[row][col]; // 행만 갱신
 
                 int resultIndex = 0;
