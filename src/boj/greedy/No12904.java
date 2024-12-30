@@ -3,41 +3,28 @@ package boj.greedy;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class No12904 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String s = br.readLine();
-        String t = br.readLine();
-        int answer = 0;
-        Queue<String> queue = new LinkedList<>();
+        StringBuilder t = new StringBuilder(br.readLine());
 
-        queue.offer(s);
-
-        while (!queue.isEmpty()) {
-            String next = queue.poll();
-
-            //queue에서 꺼낸 문자와 t가 같으면 프로그램 종료
-            if (next.equals(t)) {
-                answer = 1;
-                break;
-            }
-
-            if (next.length() < t.length()) {
-                //1) 문자열 뒤에 A 추가
-                StringBuilder sb = new StringBuilder(next);
-                sb.append("A");
-                queue.offer(sb.toString());
-
-                //2) 문자열 뒤집고 뒤에 B 추가
-                sb = new StringBuilder(next);
-                sb.reverse().append("B");
-                queue.offer(sb.toString());
+        while(s.length() < t.toString().length()) {
+            //마지막 문자가 A면 삭제, B면 삭제 후 뒤집음
+            if(t.charAt(t.length() - 1) == 'A') {
+                t.deleteCharAt(t.length() - 1);
+            } else {
+                t.deleteCharAt(t.length() - 1);
+                t.reverse();
             }
         }
-        System.out.print(answer);
+
+        if (s.equals(t.toString())) {
+            System.out.print(1);
+        } else {
+            System.out.print(0);
+        }
     }
 }
