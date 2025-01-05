@@ -16,7 +16,7 @@ public class No2230 {
         int m = Integer.parseInt(st.nextToken());
         int[] arr = new int[n];
 
-        //M 이상의 가장 작은 차이를 출력해야 함으로 20억 이상으로 설정
+        //M(20억) 이상의 가장 작은 차이를 출력해야 함으로 20억 이상으로 설정
         answer = Integer.MAX_VALUE;
 
         for (int i = 0; i < n; i++) {
