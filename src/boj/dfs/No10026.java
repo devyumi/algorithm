@@ -1,95 +1,80 @@
 package boj.dfs;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class No10026 {
+
     private static int n;
     private static char[][] arr;
-    private static boolean[][] visited1;
-    private static boolean[][] visited2;
-    private static int result1 = 0;
-    private static int result2 = 0;
-    private static char tmp = 0;
+    private static boolean[][] visited;
+    private static char tmp;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         n = Integer.parseInt(br.readLine());
         arr = new char[n][n];
-        visited1 = new boolean[n][n];
-        visited2 = new boolean[n][n];
+        visited = new boolean[n][n];
+        tmp = 0;
+        int answer1 = 0;
+        int answer2 = 0;
 
         for (int i = 0; i < n; i++) {
-            String[] strings = br.readLine().split("");
+            String[] str = br.readLine().split("");
             for (int j = 0; j < n; j++) {
-                arr[i][j] = strings[j].charAt(0);
+                arr[i][j] = str[j].charAt(0);
             }
         }
 
+        //일반 구역
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (!visited1[i][j]) {
+                if (!visited[i][j]) {
                     tmp = arr[i][j];
-                    result1 += dfs1(i, j);
+                    answer1 += dfs(i, j);
                 }
             }
         }
 
+        //적녹색약 구역을 구하기 위해 G -> R로 치환
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (!visited2[i][j]) {
-                    tmp = arr[i][j];
-                    result2 += dfs2(i, j);
+                if (arr[i][j] == 'G') {
+                    arr[i][j] = 'R';
                 }
             }
         }
 
-        bw.write(result1 + " " + result2);
-        bw.close();
+        //적녹색약 구역
+        visited = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!visited[i][j]) {
+                    tmp = arr[i][j];
+                    answer2 += dfs(i, j);
+                }
+            }
+        }
+
+        System.out.print(answer1 + " " + answer2);
+        br.close();
     }
 
-    private static int dfs1(int x, int y) {
+    //메모리 제한 128MB로 dfs 사용함
+    private static int dfs(int x, int y) {
         if (x < 0 || x >= n || y < 0 || y >= n) {
             return 0;
         }
 
-        if (!visited1[x][y]) {
+        if (!visited[x][y]) {
             if (arr[x][y] == tmp) {
-                visited1[x][y] = true;
-                dfs1(x - 1, y);
-                dfs1(x + 1, y);
-                dfs1(x, y - 1);
-                dfs1(x, y + 1);
+                visited[x][y] = true;
+                dfs(x - 1, y);
+                dfs(x + 1, y);
+                dfs(x, y - 1);
+                dfs(x, y + 1);
                 return 1;
-            }
-        }
-        return 0;
-    }
-
-    private static int dfs2(int x, int y) {
-        if (x < 0 || x >= n || y < 0 || y >= n) {
-            return 0;
-        }
-
-        if (!visited2[x][y]) {
-            if (tmp == 'R' || tmp == 'G') {
-                if (arr[x][y] == 'R' || arr[x][y] == 'G') {
-                    visited2[x][y] = true;
-                    dfs2(x - 1, y);
-                    dfs2(x + 1, y);
-                    dfs2(x, y - 1);
-                    dfs2(x, y + 1);
-                    return 1;
-                }
-            } else if (tmp == 'B') {
-                if (arr[x][y] == 'B') {
-                    visited2[x][y] = true;
-                    dfs2(x - 1, y);
-                    dfs2(x + 1, y);
-                    dfs2(x, y - 1);
-                    dfs2(x, y + 1);
-                    return 1;
-                }
             }
         }
         return 0;
