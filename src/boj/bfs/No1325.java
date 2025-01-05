@@ -6,18 +6,15 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class No1325 {
-    private static int n;
-    private static ArrayList<Integer>[] list;
-    private static int[] hacking;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        n = Integer.parseInt(st.nextToken()) + 1;
+        int n = Integer.parseInt(st.nextToken()) + 1;
         int m = Integer.parseInt(st.nextToken());
-        list = new ArrayList[n];
-        hacking = new int[n];
+        ArrayList<Integer>[] list = new ArrayList[n];
+        int[] hacking = new int[n];
 
         for (int i = 1; i < n; i++) {
             list[i] = new ArrayList<>();
