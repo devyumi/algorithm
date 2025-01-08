@@ -9,7 +9,7 @@ public class No14719 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int h = Integer.parseInt(st.nextToken());
+        st.nextToken();
         int w = Integer.parseInt(st.nextToken());
         int[] arr = new int[w];
         int answer = 0;
@@ -19,24 +19,23 @@ public class No14719 {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        int start = 0;
-        int end = start + 1;
-        int tmp = 0;
+        for (int i = 1; i < w - 1; i++) {
+            int start = 0;
+            int end = 0;
 
-        while (end <= w - 1) {
-            //
-            if (arr[start] > arr[end] && end == w - 1 && arr[end] != 0) {
-                answer += tmp - ((arr[start] - arr[end]) * (end - start));
-                break;
-
-            } else if (arr[start] > arr[end]) {
-                tmp += arr[start] - arr[end++];
+            //arr[i] 기준 왼편에서 가장 큰 수 확인
+            for (int j = 0; j < i; j++) {
+                start = Math.max(start, arr[j]);
             }
 
-            else if (arr[start] <= arr[end]) {
-                answer += tmp;
-                tmp = 0;
-                start = end++;
+            //arr[i] 기준 오른편에서 가장 큰 수 확인
+            for (int j = i + 1; j < w; j++) {
+                end = Math.max(end, arr[j]);
+            }
+
+            //arr[i]보다 왼쪽, 오른쪽 벽이 높을 때만 물이 고임
+            if (arr[i] < start && arr[i] < end) {
+                answer += Math.min(start, end) - arr[i];
             }
         }
         System.out.print(answer);
