@@ -25,11 +25,11 @@ public class No2206 {
                 arr[i][j] = Integer.parseInt(str[j]);
             }
         }
-        bfs();
+        System.out.print(bfs());
         br.close();
     }
 
-    private static void bfs() {
+    private static int bfs() {
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
 
@@ -44,8 +44,7 @@ public class No2206 {
             Wall now = queue.poll();
 
             if (now.x == n - 1 && now.y == m - 1) {
-                System.out.print(now.distance);
-                return;
+                return now.distance;
             }
 
             for (int i = 0; i < 4; i++) {
@@ -75,14 +74,14 @@ public class No2206 {
                         visited[nx][ny][1] = true;
                     }
                 } else {
-                    if (!now.checked) {
+                    if (!now.checked && !visited[nx][ny][1]) {
                         queue.offer(new Wall(nx, ny, now.distance + 1, true));
                         visited[nx][ny][1] = true;
                     }
                 }
             }
         }
-        System.out.print(-1);
+        return -1;
     }
 
     private static class Wall {
