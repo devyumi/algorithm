@@ -11,22 +11,25 @@ public class No17609 {
         int t = Integer.parseInt(br.readLine());
 
         for (int tc = 1; tc <= t; tc++) {
-            String string = br.readLine();
-            StringBuilder palindrome = new StringBuilder(string);
+            String str = br.readLine();
+            StringBuilder palindrome = new StringBuilder(str);
             int answer = 2;
 
-            if (string.equals(palindrome.reverse().toString())) {
+            //팬린드롬 확인
+            if (str.equals(palindrome.reverse())) {
                 answer = 0;
             } else {
                 int start = 0;
-                int end = string.length() - 1;
+                int end = str.length() - 1;
 
+                //두포인터 적용
                 while (start < end) {
-                    if (string.charAt(start) != string.charAt(end)) {
-                        StringBuilder left = new StringBuilder(string).deleteCharAt(start);
-                        StringBuilder right = new StringBuilder(string).deleteCharAt(end);
+                    if (str.charAt(start) != str.charAt(end)) {
+                        StringBuilder left = new StringBuilder(str).deleteCharAt(start);
+                        StringBuilder right = new StringBuilder(str).deleteCharAt(end);
 
-                        if (left.toString().equals(left.reverse().toString()) || right.toString().equals(right.reverse().toString())) {
+                        //한 문자 삭제
+                        if (left.equals(left.reverse()) || right.equals(right.reverse())) {
                             answer = 1;
                         }
                         break;
