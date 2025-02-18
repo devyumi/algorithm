@@ -1,51 +1,65 @@
 package boj.backTracking;
 
-import java.io.*;
-import java.util.StringTokenizer;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class No1987 {
     private static int r;
     private static int c;
     private static char[][] arr;
-    private static int[] weight;
-    private static int max;
+    private static boolean[] alphabet;
+    private static int answer;
     private static final int[] dx = {-1, 1, 0, 0};
     private static final int[] dy = {0, 0, -1, 1};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        r = Integer.parseInt(st.nextToken());
-        c = Integer.parseInt(st.nextToken());
+        String[] str = br.readLine().split(" ");
+        r = Integer.parseInt(str[0]);
+        c = Integer.parseInt(str[1]);
         arr = new char[r][c];
-        weight = new int[26];
-        max = 1;
+        alphabet = new boolean[26];
+        answer = 1;
 
         for (int i = 0; i < r; i++) {
-            char[] tmp = br.readLine().toCharArray();
+            char[] chars = br.readLine().toCharArray();
             for (int j = 0; j < c; j++) {
-                arr[i][j] = tmp[j];
+                arr[i][j] = chars[j];
             }
         }
-        weight[(int) arr[0][0] - 65] = 1;
-        dfs(0, 0);
-        bw.write(String.valueOf(max));
-        bw.close();
+
+        alphabet[arr[0][0] - 65] = true;
+        backTracking(0, 0);
+        System.out.print(answer);
+        br.close();
     }
 
-    private static void dfs(int x, int y) {
-        int now = (int) arr[x][y] - 65;
+    private static void backTracking(int x, int y) {
         for (int i = 0; i < 4; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
 
-            if (nx >= 0 && nx < r && ny >= 0 && ny < c && weight[(int) arr[nx][ny] - 65] == 0) {
-                weight[(int) arr[nx][ny] - 65] = weight[now] + 1;
-                max = Math.max(max, weight[(int) arr[nx][ny] - 65]);
-                dfs(nx, ny);
-                weight[(int) arr[nx][ny] - 65] = 0;
+            if (nx < 0 || nx >= r || ny < 0 || ny >= c || alphabet[arr[nx][ny] - 65]) {
+                continue;
+            }
+
+            alphabet[arr[nx][ny] - 65] = true;
+            backTracking(nx, ny);
+
+            //현재 위치까지 새로 지난 알파벳 최대 값 계산
+            answer = Math.max(answer, trueSum());
+            alphabet[arr[nx][ny] - 65] = false;
+        }
+    }
+
+    private static int trueSum() {
+        int result = 0;
+        for (Boolean b : alphabet) {
+            if (b) {
+                result++;
             }
         }
+        return result;
     }
 }
